@@ -14,6 +14,7 @@ import googleAuthConfig from "./Config/google.config";
 import Auth from "./API/Auth";
 import Restaurant from "./API/Restaurant";
 import Food from "./API/Food";
+import Image from "./API/Image";
 
 // Database Connection
 import ConnectDB from "./Database/connection";
@@ -35,6 +36,7 @@ googleAuthConfig(passport);
 zomato.use("/auth", Auth);
 zomato.use("/restaurant", Restaurant);
 zomato.use("/food", Food);
+zomato.use("/image", Image);
 
 zomato.get("/", (req, res) => res.json({message: "Setup Successful"}));
 
