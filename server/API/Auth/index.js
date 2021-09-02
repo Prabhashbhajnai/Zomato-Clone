@@ -7,6 +7,9 @@ import passport from "passport";
 // Model
 import {UserModel} from "../../Database/user";
 
+// validation
+import { ValidateSignup, ValidateSignin } from "../../Validation/auth";
+
 const Router = express.Router();
 
 /* 
@@ -17,19 +20,17 @@ const Router = express.Router();
     Method :        Post
 */
 Router.post("/signup", async (req, res) => {
+
     try {
+        await ValidateSignup(req.body.credentials);
 
         await UserModel.findByEmailAndPhone(req.body.credentials);
-
         // save to database
         const newUser = await UserModel.create(req.body.credentials);
-
         // generate JWT auth token
         const token = newUser.generateJWTToken();
-
         // return 
         return res.status(200).json({token, status: "Success"});
-
     } catch (error) {
         return res.status(500).json({error: error.message});
     }
@@ -44,6 +45,8 @@ Router.post("/signup", async (req, res) => {
 */
 Router.post("/signin", async (req, res) => {
     try {
+        await ValidateSignin(req.body.credentials);
+
         const user = await UserModel.findByEmailAndPassword(req.body.credentials);
 
         const token = user.generateJWTToken();
