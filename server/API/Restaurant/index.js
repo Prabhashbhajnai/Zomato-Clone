@@ -5,6 +5,9 @@ import passport from "passport";
 // Database model
 import {RestaurantModel} from "../../Database/allModels";
 
+// validation
+import { ValidateRestaurantCity, ValidateRestaurantSearchString } from "../../Validation/restaurant";
+import { ValidateRestaurantID } from "../../Validation/food";
 const Router = express.Router();
 
 /* 
@@ -16,8 +19,10 @@ const Router = express.Router();
 */
 Router.get("/", async (req, res) => {
     try{
+        await ValidateRestaurantCity(req.query);
+
         const {city} = req.query;
-        const allRestaurants = await RestaurantModel.find({city});
+        const restaurants = await RestaurantModel.find({city});
 
         return res.json({restaurants});
     } catch (error) {
@@ -34,7 +39,9 @@ Router.get("/", async (req, res) => {
 */
 Router.get("/:_id", async (req, res) => {
     try {
-        const {id} = req.params;
+        await ValidateRestaurantID(req.params);
+
+        const {_id} = req.params;
         const restaurant = await RestaurantModel.findOne(_id);
         if (!restaurant) 
             return res.status(404).json({error: "Restaurant not Found!!"});     
@@ -54,6 +61,8 @@ Router.get("/:_id", async (req, res) => {
 */
 Router.get("/search", async (req, res) => {
     try {
+        await ValidateRestaurantSearchString(req.body);
+
         const {searchString} = req.body;
 
         const restaurant = await RestaurantModel.find({
