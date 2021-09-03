@@ -2,7 +2,7 @@ import joi from "joi";
 
 export const ValidateUserId =(userId)=>{
     const Schema = joi.object({
-        user:joi.string(),
+        user: joi.string(),
     });
     return Schema.validateAsync(userId);
 };

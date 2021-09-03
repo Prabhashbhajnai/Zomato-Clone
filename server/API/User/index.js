@@ -4,7 +4,6 @@ import passport from "passport";
 
 // Database modal
 import { UserModel } from "../../Database/allModels";
-import { ValidateUserId } from "../../Validation/order";
 
 // validation
 import { ValidateUserId } from "../../Validation/order";
