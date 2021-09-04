@@ -38,7 +38,7 @@ const LargeNav = () => {
                             className="w-full h-full"
                         />
                     </div>
-                    <div className=" w-3/4 bg-white shadow-md p-3 flex items-center gap-3  border border-gray-200 rounded">
+                    <div className=" w-3/4 bg-white shadow-md p-3 flex items-center gap-3 border border-gray-200 rounded">
                         <div className="flex items-center gap-2 border-r-2 border-gray-300 pr-2">
                             <span className="text-zomato-400">
                                 <HiLocationMarker />
@@ -59,7 +59,7 @@ const LargeNav = () => {
                             />
                         </div>
                     </div>
-                    <div className="ml-20 flex gap-4">
+                    <div className="ml-28 flex gap-4">
                         <button className="text-gray-500 text-xl hover:text-gray-800">
                             Login
                         </button>
