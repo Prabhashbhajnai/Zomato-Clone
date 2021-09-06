@@ -1,12 +1,17 @@
 import React from 'react';
 
 // components
-import NutririonCarousal from './NutririonCarousal'
+import NutritionHeroCarousal from './NutririonHeroCarousal'
+import NutritionCarousal from './NutritionCarousal';
 
 const Nutrition = () => {
     return (
         <div>
-            <NutririonCarousal />
+            <NutritionHeroCarousal />
+            <div className="my-4">
+                <NutritionCarousal />
+            </div>
+            
         </div>
     );
 };
