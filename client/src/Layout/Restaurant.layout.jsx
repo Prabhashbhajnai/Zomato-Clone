@@ -11,7 +11,7 @@ import ReviewButtons from '../Components/Restaurant/ReviewButton';
 import InfoButtons from '../Components/Restaurant/InfoButtons';
 import TabContainer from '../Components/Restaurant/Tabs';
 
-const RestaurantLayout = () => {
+const RestaurantLayout = (props) => {
     return (
         <>
             <RestaurantNavbar />    
@@ -47,9 +47,11 @@ const RestaurantLayout = () => {
                         <RiShareForwardLine className="text-zomato-400"/> Share
                     </InfoButtons>
                 </div>
-                <div className="my-4">
+                <div className="my-8">
                     <TabContainer />
                 </div>
+                <div className="relative">{props.children}</div>
+                
             </div>
 
         </>
