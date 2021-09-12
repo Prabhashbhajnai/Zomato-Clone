@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { IoMdArrowDropright } from 'react-icons/io';
+import { IoMdArrowDropright} from 'react-icons/io';
+import { MdContentCopy} from 'react-icons/md';
+import { FaDirections} from 'react-icons/fa';
 import Slider from 'react-slick';
 import { NextArrow, PrevArrow } from '../../Components/CarousalArrow';
 import ReactStars from "react-rating-stars-component";
@@ -10,6 +12,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import MenuCollection from '../../Components/Restaurant/MenuCollection';
 import MenuSimilarRestaurantcard from '../../Components/Restaurant/MenuSimilarRestaurantCard';
 import ReviewCard from '../../Components/Restaurant/Reviews/reviewCard';
+import Mapview from '../../Components/Restaurant/Mapview';
 
 const Overview = () => {
 
@@ -117,6 +120,14 @@ const Overview = () => {
                             activeColor="#ffd700"
                         />
                     </div>
+                    <div className="my-4 md:hidden flex flex-col gap-4">
+                        <Mapview 
+                            title="Babbu Hotel"
+                            phno="+919860020163"
+                            mapLocation={[21.158777982421885, 79.09673108473021]}
+                            address="Ward 61, Mominpura Chowk, Mominpura, Nagpur"
+                        />
+                    </div>
                     <div className="my-4 flex flex-col gap-4">
                         <ReviewCard />
                         <ReviewCard />
@@ -125,28 +136,14 @@ const Overview = () => {
                 </div>
                 <aside
                     style={{ height: "fit-content" }}
-                    className="hidden md:block md:w-4/12 sticky rounded-xl fixed top-2 bg-white p-3 shadow-md"
+                    className="hidden md:flex md:w-4/12 sticky rounded-xl fixed top-2 bg-white p-3 shadow-md flex flex-col gap-4"
                 >
-                    <div>
-                        <h4 className="text-xl font-medium">Call</h4>
-                        <h5 className="text-zomato-400 font-regular">+919860020163</h5>
-                    </div>
-                    <div>
-                        <h4 className="text-xl font-medium">Direction</h4>
-                        <div className="w-full h-48">
-                            <MapContainer center={[21.158777982421885, 79.09673108473021]} zoom={13} scrollWheelZoom={false}>
-                                <TileLayer
-                                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                                />
-                                <Marker position={[21.158777982421885, 79.09673108473021]}>
-                                    <Popup>
-                                        A pretty CSS3 popup. <br /> Easily customizable.
-                                    </Popup>
-                                </Marker>
-                            </MapContainer>
-                        </div>
-                    </div>
+                    <Mapview 
+                        title="Babbu Hotel"
+                        phno="+919860020163"
+                        mapLocation={[21.158777982421885, 79.09673108473021]}
+                        address="Ward 61, Mominpura Chowk, Mominpura, Nagpur"
+                    />
                 </aside>
             </div>
         </>
