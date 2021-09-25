@@ -13,6 +13,7 @@ import ReviewCard from '../../Components/Restaurant/Reviews/reviewCard';
 import Mapview from '../../Components/Restaurant/Mapview';
 
 import {getImage} from '../../Redux/Reducer/Image/Image.action';
+import { map } from 'leaflet';
 
 const Overview = () => {
     const [menuImage, setMenuImages] = useState({images: []});
@@ -75,6 +76,10 @@ const Overview = () => {
         console.log(newRating);
     };
 
+    const getLatLong = (mapAddress) => {
+        return mapAddress?.split(",").map((item) => parseFloat(item))
+    }
+
     return (
         <>
             <div className="flex flex-col md:flex-row">
@@ -97,14 +102,15 @@ const Overview = () => {
                     </div>
                     <h4 className="text-lg font-medium mt-4">Cuisines</h4>
                     <div className="flex flex-wrap gap-2 mt-2">
-                        <span className="border border-gray-400 text-green-600 px-2 py-1 rounded-full">North Indian</span>
-                        <span className="border border-gray-400 text-green-600 px-2 py-1 rounded-full">Mughlai</span>
-                        <span className="border border-gray-400 text-green-600 px-2 py-1 rounded-full">Biryani</span>
-                        <span className="border border-gray-400 text-green-600 px-2 py-1 rounded-full">Beverages</span>
+                        {reduxState?.cuisine.map((data) => (
+                            <span className="border border-gray-400 text-blue-600 px-2 py-1 rounded-full">
+                                {data}
+                            </span>
+                        ))}
                     </div>
                     <div className="my-4">
                         <h4 className="text-lg font-medium">Average Cost</h4>
-                        <h6 className="mt-1">₹650 for two people (approx.)</h6>
+                        <h6 className="mt-1">₹{reduxState?.averageCost} for two people (approx.)</h6>
                         <small className="text-gray-500">Exclusive of applicable taxes and charges, if any</small>
                     </div>
                     <div className="my-4">
@@ -138,11 +144,11 @@ const Overview = () => {
                         />
                     </div>
                     <div className="my-4 md:hidden flex flex-col gap-4">
-                        <Mapview 
-                            title="Babbu Hotel"
-                            phno="+919860020163"
-                            mapLocation={[21.158777982421885, 79.09673108473021]}
-                            address="Ward 61, Mominpura Chowk, Mominpura, Nagpur"
+                        <Mapview
+                            title={reduxState?.name}
+                            phno={`+91${reduxState?.contactNumber}`}
+                            mapLocation={getLatLong(reduxState?.mapLocation)}
+                            address={reduxState?.address} 
                         />
                     </div>
                     <div className="my-4 flex flex-col gap-4">
@@ -156,10 +162,10 @@ const Overview = () => {
                     className="hidden md:flex md:w-4/12 sticky rounded-xl fixed top-2 bg-white p-3 shadow-md flex flex-col gap-4"
                 >
                     <Mapview 
-                        title="Babbu Hotel"
-                        phno="+919860020163"
-                        mapLocation={[21.158777982421885, 79.09673108473021]}
-                        address="Ward 61, Mominpura Chowk, Mominpura, Nagpur"
+                        title={reduxState?.name}
+                        phno={`+91${reduxState?.contactNumber}`}
+                        mapLocation={getLatLong(reduxState?.mapLocation)}
+                        address={reduxState?.address}
                     />
                 </aside>
             </div>
