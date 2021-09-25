@@ -9,7 +9,7 @@ const restaurantReducer = (state = INITIAL_STATE, action) => {
         case GET_RESTAURANT: 
             return {
                 ...state,
-                restaurant: action.payload,
+                restaurants: action.payload,
             };
         default:
             return {
