@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { useParams } from 'react-router';
+import {useDispatch} from 'react-redux';
 import {MdStarBorder} from 'react-icons/md';
 import {RiDirectionLine, RiShareForwardLine} from 'react-icons/ri';
 import {BiBookmarkPlus} from 'react-icons/bi';
@@ -12,27 +14,44 @@ import InfoButtons from '../Components/Restaurant/InfoButtons';
 import TabContainer from '../Components/Restaurant/Tabs';
 import CartContainer from '../Components/Cart/CartContainer';
 
+// Redux actions
+import { getSpecificRestaurant } from '../Redux/Reducer/Restaurant/restaurant.action';
+import { getImage } from '../Redux/Reducer/Image/Image.action';
+
 const RestaurantLayout = (props) => {
+    const [restaurant , setRestaurant] = useState({
+        images: [],
+        name: "",
+        cuisine: "",
+        address: "",
+    });
+    const {id} = useParams();
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getSpecificRestaurant(id)).then((data) => {
+            setRestaurant((prev) => ({
+                ...prev, 
+                ...data.payload.restaurant
+            }));
+            dispatch(getImage(data.payload.restaurant.photos)).then(data => 
+                setRestaurant((prev) => ({...prev, ...data.payload.image})))
+        });
+    }, []);
+
     return (
         <>
             <RestaurantNavbar />    
             <div className="container mx-auto px-4 lg:px-24">
                 <ImageGrid 
-                    images={[
-                        "https://b.zmtcdn.com/data/pictures/1/3300011/733f7837d034da88fcbd459876ccdf7a.jpg",
-                        "https://b.zmtcdn.com/data/pictures/1/3300011/733f7837d034da88fcbd459876ccdf7a.jpg",
-                        "https://b.zmtcdn.com/data/pictures/1/3300011/733f7837d034da88fcbd459876ccdf7a.jpg",
-                        "https://b.zmtcdn.com/data/pictures/1/3300011/733f7837d034da88fcbd459876ccdf7a.jpg",
-                        "https://b.zmtcdn.com/data/pictures/1/3300011/733f7837d034da88fcbd459876ccdf7a.jpg",
-                        "https://b.zmtcdn.com/data/pictures/1/3300011/733f7837d034da88fcbd459876ccdf7a.jpg",
-                    ]} 
+                    images={restaurant.images} 
                 />
                 <RestaurantInfo 
-                    name="Babbu Hotel" 
-                    restaurantRating="4.3" 
-                    deliveryRating="3.8" 
-                    cuisine="North Indian, Mughlai, Biryani, Beverages" 
-                    address="Mominpura, Nagpur" 
+                    name={restaurant.name} 
+                    restaurantRating={restaurant?.rating || 0} 
+                    deliveryRating={restaurant?.rating || 0} 
+                    cuisine={restaurant?.cuisine} 
+                    address={restaurant?.address}
                 />
                 <div className="my-4 flex flex-wrap gap-3">
                     <ReviewButtons isActive>

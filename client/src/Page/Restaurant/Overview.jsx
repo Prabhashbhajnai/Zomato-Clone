@@ -1,12 +1,10 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { IoMdArrowDropright} from 'react-icons/io';
-import { MdContentCopy} from 'react-icons/md';
-import { FaDirections} from 'react-icons/fa';
+import { IoMdArrowDropright } from 'react-icons/io';
 import Slider from 'react-slick';
+import { useSelector, useDispatch } from 'react-redux';
 import { NextArrow, PrevArrow } from '../../Components/CarousalArrow';
 import ReactStars from "react-rating-stars-component";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 
 // component
 import MenuCollection from '../../Components/Restaurant/MenuCollection';
@@ -14,9 +12,12 @@ import MenuSimilarRestaurantcard from '../../Components/Restaurant/MenuSimilarRe
 import ReviewCard from '../../Components/Restaurant/Reviews/reviewCard';
 import Mapview from '../../Components/Restaurant/Mapview';
 
-const Overview = () => {
+import {getImage} from '../../Redux/Reducer/Image/Image.action';
 
+const Overview = () => {
+    const [menuImage, setMenuImages] = useState({images: []});
     const { id } = useParams();
+
     const settings = {
         dots: false,
         infinite: false,
@@ -54,6 +55,22 @@ const Overview = () => {
         ],
     };
 
+    const reduxState = useSelector(
+        (globalStore) => globalStore.restaurant.selectedRestaurant.restaurant
+    );
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if(reduxState) {
+            dispatch(getImage(reduxState?.menuImage)).then((data) => {
+                const images = [];
+                data.payload.image.images.map(({location}) => images.push(location))
+                setMenuImages(images)
+            });
+        }
+    }, []);
+
     const ratingChanged = (newRating) => {
         console.log(newRating);
     };
@@ -75,12 +92,7 @@ const Overview = () => {
                         <MenuCollection
                             menuTitle="Menu"
                             pages="3"
-                            image={[
-                                "https://b.zmtcdn.com/data/menus/011/3300011/07d261f26041c8f91f22ce4bd50a69c3.jpg",
-                                "https://b.zmtcdn.com/data/menus/011/3300011/07d261f26041c8f91f22ce4bd50a69c3.jpg",
-                                "https://b.zmtcdn.com/data/menus/011/3300011/07d261f26041c8f91f22ce4bd50a69c3.jpg",
-                            
-                            ]}
+                            image={menuImage}
                         />
                     </div>
                     <h4 className="text-lg font-medium mt-4">Cuisines</h4>
