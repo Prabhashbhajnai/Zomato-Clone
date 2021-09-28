@@ -7,7 +7,9 @@ export const ValidateReview = (revdata) => {
         user: joi.string(),
         rating: joi.number().precision(0).required(),
         reviewText: joi.string().required(),
-        photos: joi.string()
+        isRestaurantReview: joi.boolean(),
+        isFoodReview: joi.boolean(),
+        photos: joi.array().items(joi.string())
     });
     return Schema.validateAsync(revdata);
 };

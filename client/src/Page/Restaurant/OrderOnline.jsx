@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {AiOutlineCompass} from 'react-icons/ai';
 import {BiTimeFive} from 'react-icons/bi';
 
@@ -6,10 +7,26 @@ import {BiTimeFive} from 'react-icons/bi';
 // components
 import FloatMenuButton from '../../Components/Restaurant/Order-Online/FloatMenuButton';
 import MenuListContainer from '../../Components/Restaurant/Order-Online/MenuListContainer';
-import FoodItem from '../../Components/Restaurant/Order-Online/FoodItem';
 import FoodList from '../../Components/Restaurant/Order-Online/FoodList';
 
+// redux action
+import { getFoodList } from '../../Redux/Reducer/Food/Food.action';
+
 const OrderOnline = () => {
+    const [menu, setMenu] = useState([]);
+
+    const reduxState = useSelector(
+        (globalStore) => globalStore.restaurant.selectedRestaurant.restaurant
+    );
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        reduxState &&
+            dispatch(getFoodList(reduxState?.menu)).then((data) => 
+                setMenu(data.payload.menus.menus)
+            );
+    }, [reduxState]);
+
     return (
         <>
             <div className="w-full h-screen flex">
@@ -28,25 +45,9 @@ const OrderOnline = () => {
                     </div>
 
                     <section className="flex flex-col h-screen overflow-y-scroll gap-3 md:gap-5">
-                        <FoodList 
-                            title="Recommended" 
-                            items={[
-                                {
-                                    title: "Mutton Handi [Half]",
-                                    price: "1000",
-                                    rating: 3,
-                                    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure quae laborum aliquam iusto cupiditate quisquam fugiat quidem eligendi, maxime officiis eum qui. Aperiam assumenda laboriosam libero rem doloribus, consequatur maiores!",
-                                    image: "https://b.zmtcdn.com/data/dish_photos/261/1816eba714ae23f5cbde48d7e9086261.jpg"
-                                },
-                                {
-                                    title: "Mutton Handi [Half]",
-                                    price: "1000",
-                                    rating: 3,
-                                    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure quae laborum aliquam iusto cupiditate quisquam fugiat quidem eligendi, maxime officiis eum qui. Aperiam assumenda laboriosam libero rem doloribus, consequatur maiores!",
-                                    image: "https://b.zmtcdn.com/data/dish_photos/261/1816eba714ae23f5cbde48d7e9086261.jpg"
-                                },
-                            ]} 
-                        />
+                        {menu.map((item) => (
+                            <FoodList key={item._id} {...item} />
+                        ))}
                     </section>
                 </div>
             </div>

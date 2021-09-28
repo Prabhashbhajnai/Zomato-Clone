@@ -12,6 +12,25 @@ import { ValidateUpdatedUserDetails } from "../../Validation/user";
 const Router = express.Router();
 
 /*
+Route     /
+Des       Get user data
+Params    _id
+BODY      none
+Access    Public
+Method    GET  
+*/
+Router.get("/", passport.authenticate("jwt"), async (req, res) => {
+    try {
+      const { email, fullname, phoneNumber, address } =
+        req.session.passport.user._doc;
+  
+      return res.json({ user: { email, fullname, phoneNumber, address } });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  });  
+
+/*
 Route     /:_id
 Des       Get User data
 Params    _id
@@ -47,7 +66,8 @@ Router.put("/update/:_id", async(req, res) => {
 
         const{_id} = req.params;
         const {userData} = req.body;
-        const updateUserData = await UserModel.findByIdAndUpdate(_id,
+        const updateUserData = await UserModel.findByIdAndUpdate(
+            {_id},
             {
                 $set: userData,
             },

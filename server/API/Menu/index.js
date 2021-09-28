@@ -19,10 +19,10 @@ const Router = express.Router();
 */
 Router.get("/list/:_id", async(req, res) => {
     try {
-        await ValidateMenuId(req.params);
+        // await ValidateMenuId(req.params);
 
         const {_id} = req.params;
-        const menus = await MenuModel.findOne(_id);
+        const menus = await MenuModel.findById(_id);
 
         return res.json({menus});
     } catch (error) {
@@ -39,7 +39,7 @@ Router.get("/list/:_id", async(req, res) => {
 */
 Router.get("/image/:_id", async (req, res) => {
     try {
-        await ValidateImageId(req.params);
+        // await ValidateImageId(req.params);
 
         const {_id} = req.params;
         const menus = await ImageModel.findOne(_id);

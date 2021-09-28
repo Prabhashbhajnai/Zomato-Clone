@@ -13,10 +13,12 @@ import ReviewCard from '../../Components/Restaurant/Reviews/reviewCard';
 import Mapview from '../../Components/Restaurant/Mapview';
 
 import {getImage} from '../../Redux/Reducer/Image/Image.action';
-import { map } from 'leaflet';
+import { getReviews } from '../../Redux/Reducer/Reviews/review.action';
 
 const Overview = () => {
     const [menuImage, setMenuImages] = useState({images: []});
+    const [Reviews, setReviews] = useState([]);
+
     const { id } = useParams();
 
     const settings = {
@@ -69,8 +71,11 @@ const Overview = () => {
                 data.payload.image.images.map(({location}) => images.push(location))
                 setMenuImages(images)
             });
+            dispatch(getReviews(reduxState._id)).then((data) => 
+                setReviews(data.payload.reviews)
+            );
         }
-    }, []);
+    }, [reduxState]);
 
     const ratingChanged = (newRating) => {
         console.log(newRating);
@@ -78,7 +83,7 @@ const Overview = () => {
 
     const getLatLong = (mapAddress) => {
         return mapAddress?.split(",").map((item) => parseFloat(item))
-    }
+    };
 
     return (
         <>
@@ -96,7 +101,6 @@ const Overview = () => {
                     <div className="flex flex-wrap gap-3 mt-4">
                         <MenuCollection
                             menuTitle="Menu"
-                            pages="3"
                             image={menuImage}
                         />
                     </div>
@@ -152,9 +156,9 @@ const Overview = () => {
                         />
                     </div>
                     <div className="my-4 flex flex-col gap-4">
-                        <ReviewCard />
-                        <ReviewCard />
-                        <ReviewCard />
+                        {Reviews.map((reviewData) => (
+                            <ReviewCard {...reviewData} />
+                        ))}
                     </div>
                 </div>
                 <aside

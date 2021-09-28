@@ -15,6 +15,7 @@ import routeConfig from "./Config/route.config";
 import Auth from "./API/Auth";
 import Restaurant from "./API/Restaurant";
 import Food from "./API/Food";
+import Menu from "./API/Menu";
 import Image from "./API/Image";
 import Order from "./API/orders"; 
 import Reviews from "./API/reviews"; 
@@ -41,6 +42,7 @@ routeConfig(passport);
 zomato.use("/auth", Auth);
 zomato.use("/restaurant", Restaurant);
 zomato.use("/food", Food);
+zomato.use("/menu", Menu)
 zomato.use("/image", Image);
 zomato.use("/order", Order);
 zomato.use("/reviews", Reviews);
