@@ -31,6 +31,8 @@ export default function SignUp({ isOpen, setIsOpen }) {
         dispatch(signUp(userData))
     };
 
+    const googlesignin = () => (window.location.href = "http://localhost:4000/auth/google");
+
     return (
         <>
             <Transition appear show={isOpen} as={Fragment}>
@@ -76,7 +78,7 @@ export default function SignUp({ isOpen, setIsOpen }) {
                                     Sign Up
                                 </Dialog.Title>
                                 <div className="mt-2 flex flex-col gap-3 w-full">
-                                    <button className="py-2 justify-center rounded-lg flex items-center gap-3 w-full border border-gray-400 bg-white text-gray-700 hover:bg-gray-100">
+                                    <button onClick={googlesignin} className="py-2 justify-center rounded-lg flex items-center gap-3 w-full border border-gray-400 bg-white text-gray-700 hover:bg-gray-100">
                                         <FcGoogle className="w-8 h-8" /> Continue with Google 
                                     </button>
 
