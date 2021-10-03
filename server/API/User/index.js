@@ -38,18 +38,17 @@ Body      none
 Access    Public
 Method    GET  
 */
-Router.get("/:_id", async(req, res) => {
+Router.get("/:_id", async (req, res) => {
     try {
-        await ValidateUserId(req.params);
-
-        const {_id} = req.params;
-        const getUser = await UserModel.findById(_id);
-
-        return res.json({user: getUser});
+      const user = await UserModel.findById(req.params._id);
+      const { fullname } = user;
+  
+      return res.json({ user: { fullname } });
     } catch (error) {
-        return res.status(500).json({error: error.message});
+      return res.status(500).json({ error: error.message });
     }
-});
+  });
+  
 
 /*
 Route     /update/:_id

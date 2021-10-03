@@ -47,7 +47,8 @@ const FoodItem = (props) => {
                         {food?.description}
                     </p>
                 </div>
-                <div className="hidden md:block w-1/4">                        <button className="flex items-center gap-2 text-zomato-400 bg-zomato-50 border-zomato-400 px-4 py-2 rounded-lg">
+                <div className="hidden md:block w-1/4">                        
+                    <button className="flex items-center gap-2 text-zomato-400 bg-zomato-50 border-zomato-400 px-4 py-2 rounded-lg">
                     <AiOutlinePlus />Add
                 </button>
                 </div>

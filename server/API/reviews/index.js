@@ -37,13 +37,16 @@ Body      review object
 Access    Public
 Method    POST  
 */
-Router.post("/new", async(req, res) => {
+Router.post("/new", passport.authenticate("jwt"), async(req, res) => {
     try {
-        await ValidateReview(req.body);
+        //await ValidateReview(req.body);
+
+        const { _id } =
+        req.session.passport.user._doc;
 
         const {reviewData} = req.body;
 
-        await ReviewModel.create(reviewData);
+        await ReviewModel.create({...reviewData, user: _id});
 
         return res.json({review: "Sucessfully Created Review."});
 
