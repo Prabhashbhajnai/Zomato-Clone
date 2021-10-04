@@ -3,17 +3,24 @@ import { FaUserAlt } from "react-icons/fa";
 import { HiLocationMarker } from "react-icons/hi";
 import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 import { RiSearch2Line } from "react-icons/ri";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import gravatar from 'gravatar';
 
 // components
 import SignIn from '../Auth/SignIn';
 import SignUp from '../Auth/SignUp';
 
+// redux action
+import { signOut } from '../../Redux/Reducer/Auth/Auth.action';
+
 const MobileNav = ({SignIn, SignUp}) => {
 
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+    const dispatch = useDispatch();
+
     const reduxState = useSelector(global => global.user.user);
+
+    const signOutHandler = () => dispatch(signOut());
 
     return (
         <div className="flex w-full items-center justify-between lg:hidden">
@@ -40,7 +47,7 @@ const MobileNav = ({SignIn, SignUp}) => {
                             </div>
                             {isDropDownOpen && (
                                 <div className="absolute shadow-lg py-3 -bottom-20 -right-4 z-20 bg-white w-full flex flex-col gap-2">
-                                    <button>Sign Out</button>
+                                    <button onClick={signOutHandler}>Sign Out</button>
                                 </div>
                             )}
                         </>
@@ -65,7 +72,11 @@ const MobileNav = ({SignIn, SignUp}) => {
 
 const LargeNav = ({SignIn, SignUp}) => {
     const [isDropDownOpen, setIsDropDownOpen] = useState(false);
+    const dispatch = useDispatch();
+
     const reduxState = useSelector(global => global.user.user);
+
+    const signOutHandler = () => dispatch(signOut());
 
     return (
         <>
@@ -111,7 +122,7 @@ const LargeNav = ({SignIn, SignUp}) => {
                                 </div>
                                 {isDropDownOpen && (
                                     <div className="absolute shadow-lg py-3 -right-4 w-full bg-white z-30 flex flex-col gap-2">
-                                        <button>Sign Out</button>
+                                        <button onClick={signOutHandler}>Sign Out</button>
                                     </div>
                                 )}
                             </div>
