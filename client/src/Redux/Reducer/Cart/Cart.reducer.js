@@ -43,4 +43,4 @@ const CartReducer = (state = INITIAL_STATE, action) => {
     }
 };
 
-export default FoodReducer;
+export default CartReducer;
