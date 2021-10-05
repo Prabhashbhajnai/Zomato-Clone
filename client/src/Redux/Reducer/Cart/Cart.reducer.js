@@ -1,7 +1,7 @@
 import { GET_CART, ADD_CART, DELETE_CART, INCREMENT_QTY, DECREMENT_QTY } from "./Cart.type";
 
 const INITIAL_STATE = {
-    cart: []
+    cart: [],
 };
 
 const CartReducer = (state = INITIAL_STATE, action) => {
