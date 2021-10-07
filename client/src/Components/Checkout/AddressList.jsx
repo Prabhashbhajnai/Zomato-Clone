@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { RadioGroup } from '@headlessui/react'
+import { useState } from 'react';
+import { RadioGroup } from '@headlessui/react';
 
 export default function AddressList(props) {
     const [selected, setSelected] = useState(props.address[0])
