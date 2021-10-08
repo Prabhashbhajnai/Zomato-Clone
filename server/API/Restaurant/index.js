@@ -12,7 +12,7 @@ const Router = express.Router();
 
 /* 
     Route:          /
-    Description:    Get all the restaurant details based inn city
+    Description:    Get all the restaurant details based on city
     Params:         none
     Access:         Public
     Method :        GET
@@ -76,5 +76,22 @@ Router.get("/search", async (req, res) => {
         return res.status(500).json({error: error.message});     
     }
 });
+
+/* 
+    Route:          /new
+    Description:    add new restaurant
+    Params:         none
+    Body:           searchString
+    Access:         Private
+    Method :        POST
+*/
+Router.post("/new", passport.authenticate("jwt"), async (req, res) => {
+    try {
+      const newRetaurant = await RestaurantModel.create(req.body.restaurantData);
+      return res.json({ restaurant: newRetaurant });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  });
 
 export default Router;
