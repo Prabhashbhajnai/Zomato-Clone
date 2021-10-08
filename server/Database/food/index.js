@@ -18,14 +18,12 @@ const FoodSchema = new mongoose.Schema(
                 ref: "Foods",
             },
         ],
-        restaurants: {
-            
+        restaurant: {
             type: mongoose.Types.ObjectId,
             ref: "Restaurants",
             required: true,
         },
         reviews: {
-            
             type: mongoose.Types.ObjectId,
             ref: "Reviews",
         },

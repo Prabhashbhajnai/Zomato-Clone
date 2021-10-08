@@ -27,7 +27,7 @@ Router.get("/r/:_id", async (req, res) => {
 
         return res.json({foods});
     } catch (error) {
-        return res.restaurants(500).json({error: error.message});
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -45,7 +45,7 @@ Router.get("/:_id", async (req, res) => {
 
         return res.json({foods});
     } catch (error) {
-        return res.restaurants(500).json({error: error.message});
+        return res.status(500).json({error: error.message});
     }
 });
 
@@ -67,8 +67,25 @@ Router.get("/c/:category", async (req, res) => {
 
         return res.json({foods});
     } catch (error) {
-        return res.restaurants(500).json({error: error.message});
+        return res.status(500).json({error: error.message});
     }
 });
+
+/* 
+    Route:          /new
+    Description:    Post food
+    Params:         none
+    Access:         Private
+    Method :        POST
+*/
+Router.post("/new", passport.authenticate("jwt"), async (req, res) => {
+    try {
+      const { foodData } = req.body;
+      const newFood = await FoodModel.create(foodData);
+      return res.json({ foods: newFood });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  });
 
 export default Router;
