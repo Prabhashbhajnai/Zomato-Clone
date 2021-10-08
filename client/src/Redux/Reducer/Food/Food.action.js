@@ -22,6 +22,7 @@ export const getFoodList = (menuId)  => async (dispatch) => {
     try {
         const Menu = await axios({
             method: "GET",
+            // url: `http://localhost:4000/menu/list/6160649258fcc030687ed244`
             url: `http://localhost:4000/menu/list/${menuId}`
         })
 

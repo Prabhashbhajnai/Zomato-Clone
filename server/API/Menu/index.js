@@ -50,4 +50,37 @@ Router.get("/image/:_id", async (req, res) => {
     }
 });
 
+/* 
+    Route:          /new
+    Description:    add new menu
+    Params:         none
+    Access:         Public
+    Method :        GET
+*/
+Router.post("/new", async (req, res) => {
+    try {
+      const { menuData } = req.body;
+  
+      if (menuData._id) {
+        const updateMenu = await MenuModel.findByIdAndUpdate(
+          menuData._id,
+          {
+            $push: {
+              menu: { $each: menuData.menus },
+            },
+          },
+          { new: true }
+        );
+  
+        return res.json({ menu: updateMenu });
+      }
+  
+      const createNewMenu = await MenuModel.create(menuData);
+  
+      return res.json({ menu: createNewMenu });
+    } catch (error) {
+      return res.status(500).json({ error: error.message });
+    }
+  });
+
 export default Router;

@@ -30,8 +30,8 @@ const OrderOnline = () => {
 
     useEffect(() => {
         reduxState &&
-            dispatch(getFoodList(reduxState?.menu)).then((data) => 
-                setMenu(data.payload.menus.menus)
+            dispatch(getFoodList(reduxState.menu)).then((data) => 
+                setMenu(data.payload.menus.menu)
             );
     }, [reduxState]);
 

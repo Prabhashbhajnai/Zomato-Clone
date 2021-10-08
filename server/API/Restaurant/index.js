@@ -55,7 +55,6 @@ Router.get("/:_id", async (req, res) => {
     Route:          /search
     Description:    Get restaurant details based on search string
     Params:         none
-    Body:           searchString
     Access:         Public
     Method :        GET
 */
