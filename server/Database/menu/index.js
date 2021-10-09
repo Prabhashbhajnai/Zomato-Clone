@@ -17,7 +17,6 @@ const MenuSchema = new mongoose.Schema(
             {
                 type: mongoose.Types.ObjectId,
                 ref: "Foods",
-                unique: true,
             },
         ],
     },

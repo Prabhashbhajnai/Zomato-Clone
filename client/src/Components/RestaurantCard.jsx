@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { AiTwotoneStar } from 'react-icons/ai';
@@ -16,8 +16,8 @@ const RestaurantCard = (props) => {
     }, [props.photos]);
 
     return (
-        <Link to={`/restaurant/${props._id}`} className="w-full">
-            <div className="bg-white p-2 mb-4 w-full rounded-2xl transition duration-700 ease-in-out hover:shadow-lg md:w-1/2 lg:w-1/3 lg:p-8">
+        <Link to={`/restaurant/${props._id}`} className="w-full md:w-1/3">
+            <div className="bg-white p-2 mb-4 w-full rounded-2xl transition duration-700 ease-in-out hover:shadow-lg">
                 <div className="w-full h-56 relative">
                     <div className="absolute w-full bottom-4 flex items-end justify-between">
                         <div className="flex flex-col gap-2 items-start">
@@ -31,8 +31,8 @@ const RestaurantCard = (props) => {
                                     ₹{`${props.isOff}`} OFF
                                 </span>
                             )}
-                        </div>                        
-                        <span className="bg-white bg-opacity-80 px-1 rounded mr-3 text-sm">{props.durationOfdelivery} min</span>                 
+                        </div>
+                        <span className="bg-white bg-opacity-80 px-1 rounded mr-3 text-sm">{props.durationOfdelivery} min</span>
                     </div>
 
                     <img
