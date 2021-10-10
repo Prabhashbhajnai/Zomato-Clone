@@ -1,0 +1,23 @@
+sudo: required
+
+# install Docker
+services:
+  - docker
+
+# Execute logic
+script:
+  - echo "Hello"
+
+after_success:
+# build all the docker files
+  - docker build -t prabhashbhajani/zomato-clone-client ./client
+  - docker build -t prabhashbhajani/zomato-clone-server ./server
+  - docker build -t prabhashbhajani/zomato-clone-nginx ./nginx
+
+  # log in to docker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # push to docker hub
+  - docker push prabhashbhajani/zomato-clone-client
+  - docker push prabhashbhajani/zomato-clone-server
+  - docker push prabhashbhajani/zomato-clone-nginx
